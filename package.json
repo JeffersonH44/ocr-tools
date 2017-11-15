@@ -35,6 +35,7 @@
   "runkitExampleFilename": "./runkit.js",
   "homepage": "https://github.com/cheminfo-js/ocr#readme",
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "cheminfo-tools": "^1.5.0",
     "eslint": "^3.4.0",
     "eslint-config-cheminfo": "^1.2.0",
