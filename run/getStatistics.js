@@ -4,23 +4,27 @@
 'use strict';
 
 var rootDir = '..'; // current directory where images will be saved
-const readDirectory = rootDir + '/output/'; // images directory to be processed
+const readDirectory = rootDir + '/mrz/'; // images directory to be processed
 
 const codes = {
-    CORRECT: {
+    PREPROCESS_ERROR: {
         code: 0,
+        save: '/preprocess/'
+    },
+    CORRECT: {
+        code: 1,
         save: '/correct/'
     },
     MRZ_PARSE_ERROR: { // Invalid MRZ given by the parser (data that maybe doesn't have sense)
-        code: 1,
+        code: 2,
         save: '/notParse/'
     },
     NO_DETECTED_TEXT: { // different sizes of each MRZ line
-        code: 2,
+        code: 3,
         save: '/notDetected/'
     },
     NOT_FOUND_LETTERS: { // Undetectable letters by runMRZ method
-        code: 3,
+        code: 4,
         save: '/notFound/'
     }
 };
@@ -44,7 +48,7 @@ var options = {
         negative: false,
         maxWidth: 50,
         //greyThreshold: 0.5,
-        algorithm: 'minimum',
+        algorithm: 'isodata',
         randomColors: true
         //level: true // we recalculate the greyThreshold based
                     // on min / max values of the grey image
@@ -132,8 +136,8 @@ function isMRZCorrect(image, filename) {
             averageSurface
         } = runMRZ(image, fontFingerprint, options);
     } catch (e) {
-        console.log(e);
-        throw e;
+        // console.log(e);
+        return codes.PREPROCESS_ERROR;
     }
     
     //console.timeEnd('full OCR process');
@@ -198,7 +202,7 @@ Promise.all(promises).then(function (elems) {
     //var output = elems.map(elem => isMRZCorrect(elem));
     for (var i = 0; i < elems.length; i++) {
         var elem = elems[i];
-        // console.log(`Processing file: ${files[i]}`);
+        console.log(`Processing file: ${files[i]}`);
         var code = isMRZCorrect(elem, files[i]);
         counters[code]++;
 

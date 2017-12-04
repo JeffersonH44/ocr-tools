@@ -5,7 +5,7 @@ const tableify = require('tableify');
 const tanimoto = require('ml-distance').similarity.tanimoto;
 
 const rootDir = '..';
-const readPath = rootDir + '/data/passport/';
+const readPath = rootDir + '/data/id/';
 const saveMask = rootDir + '/mask/';
 const saveMRZ = rootDir + '/mrz/';
 const saveHTMLFile = 'passport.html';
@@ -22,13 +22,13 @@ const maskOptions = {
     algorithm: 'isodata'
 };
 const maxSizeRoi = 800;
-const filterSize = 0.86;
+const filterSize = 0.82;
 
 var files = fs.readdirSync(readPath);
 console.log(files);
 var promises = files.map(elem => IJS.load(readPath + elem));
 var table = [];
-var checkRoi = number => 15 <= number && number <= 50;
+
 
 function similarityPeaks(peaks) {
     if(peaks.length < 2) {
@@ -208,6 +208,7 @@ function getMRZ(medianHistogram, rowsInfo, rois, imageWidth) {
 
 Promise.all(promises).then(function (images) {
     for (var i = 0; i < images.length; i++) {
+        console.log('processing:', files[i]);
         var image = images[i];
         var grey = image.grey({allowGrey: true});
         var mask = grey.mask(maskOptions);
