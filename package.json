@@ -36,9 +36,9 @@
   "homepage": "https://github.com/cheminfo-js/ocr#readme",
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "cheminfo-tools": "^1.5.0",
+    "cheminfo-tools": "^1.20.2",
     "eslint": "^3.4.0",
-    "eslint-config-cheminfo": "^1.2.0",
+    "eslint-config-cheminfo": "^1.9.1",
     "eslint-plugin-no-only-tests": "^1.1.0",
     "istanbul": "^0.4.4",
     "mocha": "^3.1.2",
@@ -46,9 +46,9 @@
     "should": "^11.1.0"
   },
   "dependencies": {
-    "canvas": "^1.6.2",
+    "canvas": "^1.6.7",
     "font-manager": "^0.2.2",
-    "image-js": "^0.14.1",
+    "image-js": "^0.14.4",
     "mkdirp": "^0.5.1",
     "ml-array-mean": "^1.0.1",
     "ml-distance": "^2.1.1",

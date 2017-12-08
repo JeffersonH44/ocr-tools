@@ -1,6 +1,6 @@
 'use strict';
 
-const IJS = require('image-js');
+const IJS = require('image-js').Image;
 const SYMBOLS = require('./symbolClasses').MRZ;
 
 
@@ -20,7 +20,7 @@ function generateSymbolImage(options = {}) {
     fontName = fontSize + 'px ' + fontName;
     
     // default RGBA 8bits
-    const image = new IJS(((numberPerLine + 2) * (grid)), (symbols.length + 2) * (grid));
+    const image = new IJS(((numberPerLine + 2) * (grid)), (symbols.length + 2) * (grid), );
 
     // the imageOptions is now white
     const data = image.data;

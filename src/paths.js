@@ -6,5 +6,5 @@ module.exports = {
     readPath: rootDir + '/data/id/',
     saveMask: rootDir + '/mask/',
     saveMRZ: rootDir + '/mrz/',
-    saveHTMLFile: 'passport.html'
+    saveHTMLFile: 'id.html'
 };

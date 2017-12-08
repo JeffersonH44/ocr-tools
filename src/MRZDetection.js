@@ -45,12 +45,9 @@ const roiOptions = {
     algorithm: 'isodata',
     randomColors: true
 };
-const maskOptions = {
-    invert: true,
-    algorithm: 'isodata'
-};
+
 const fingerprintOptions = {
-    height: 12,
+    height: 40,
     width: 12,
     minSimilarity: 0.5,
     fontName: 'ocrb',
