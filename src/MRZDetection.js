@@ -2,13 +2,15 @@ const tanimoto = require('ml-distance').similarity.tanimoto;
 const symbols = require('../src/util/symbolClasses').MRZ;  // SYMBOLS MRZ NUMBERS
 const runMRZ = require('../src/runMRZ');
 const loadFontFingerprint = require('../src/util/loadFontData');
+const LettersStats = require('../src/util/LettersStatistics');
 const parse = require('mrz').parse;
 const fs = require('fs');
 
 // options
 const {
     saveMRZ,
-    rootDir
+    rootDir,
+    readPath
 } = require('./paths');
 
 const codes = {
@@ -37,19 +39,19 @@ const codes = {
 var codeNames = Object.keys(codes);
 
 const roiOptions = {
-    minSurface: 200,
+    minSurface: 300,
     positive: true,
     negative: false,
-    minRatio: 0.5,
+    minRatio: 0.3,
     maxRatio: 2.0,
     algorithm: 'isodata',
     randomColors: true
 };
 
 const fingerprintOptions = {
-    height: 40,
+    height: 12,
     width: 12,
-    minSimilarity: 0.5,
+    minSimilarity: 0.3,
     fontName: 'ocrb',
     category: symbols.label
 };
@@ -59,6 +61,7 @@ const filterSize = 0.82;
 
 // functions to get MRZ
 
+var lettersStats = new LettersStats(readPath + 'ground.csv');
 var checkRoi = number => 15 <= number && number <= 50;
 
 function similarityPeaks(peaks) {
@@ -331,8 +334,10 @@ function isMRZCorrect(image, filename) {
         painted
     };
 
-    var text = ocrResult.lines.map(getTextNoReplace).join('\n');
-    var size;
+    var textStats = ocrResult.lines.map(getTextNoReplace);
+    lettersStats.check(filename, textStats);
+
+    var text = textStats.join('\n');
     for (var line of ocrResult.lines) {
         if (line.notFound) {
             return saveImage(images, codes.NOT_FOUND_LETTERS, filename, {
@@ -373,9 +378,14 @@ function isMRZCorrect(image, filename) {
     });
 }
 
+function getLetterStats() {
+    return lettersStats.getResults();
+}
+
 module.exports = {
     filterManager,
     getMRZ,
     isMRZCorrect,
+    getLetterStats,
     codes
 };

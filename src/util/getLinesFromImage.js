@@ -32,6 +32,7 @@ module.exports = function getLinesFromImage(image, options = {}) {
 
     var manager = image.getRoiManager();
     manager.fromMask(mask);
+    // TODO: change this options until it works
     var rois = manager.getRois(roiOptions);
     var averageSurface = mean(rois.map(elem => elem.surface));
     var painted = manager.paint(roiOptions);

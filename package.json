@@ -53,6 +53,7 @@
     "ml-array-mean": "^1.0.1",
     "ml-distance": "^2.1.1",
     "mrz": "^1.0.0",
+    "papaparse": "^4.3.6",
     "tableify": "^1.1.0"
   }
 }

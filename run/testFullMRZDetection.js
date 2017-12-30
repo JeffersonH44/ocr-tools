@@ -14,6 +14,7 @@ var {
     isMRZCorrect,
     getMRZ,
     filterManager,
+    getLetterStats,
     codes
 } = require('../src/MRZDetection');
 
@@ -24,6 +25,8 @@ const maskOptions = {
 };
 
 var files = fs.readdirSync(readPath);
+files = files.filter(files => files.endsWith('.png'));
+console.log(files);
 var promises = files.map(elem => IJS.load(readPath + elem));
 var table = [];
 
@@ -114,6 +117,8 @@ Promise.all(promises).then(function (images) {
             // 'Col info median': `<span class='histogram'>${colsInfo.join(',')}</span>`
         });
     }
+
+    console.log(getLetterStats());
 
     fs.writeFileSync(saveHTMLFile,
         `
