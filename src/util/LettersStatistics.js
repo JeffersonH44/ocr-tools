@@ -1,13 +1,13 @@
 var Papa = require('papaparse');
 var fs = require('fs');
 
-const ALPHABET = 'abcdefghijklmnopqrstuvwxyz<'.toUpperCase();
+const ALPHABET = 'abcdefghijklmnopqrstuvwxyz0123456789<'.toUpperCase();
 const LINE_LENGTH = 'line length';
 
 class LettersStatistics {
     constructor(filepath) {
         var file = fs.readFileSync(filepath, 'utf-8');
-        var data = Papa.parse(file).data;
+        var data = Papa.parse(file).data.filter(elem => elem[0] !== '');
         this.data = {};
         for (var i = 0; i < data.length; ++i) {
             var currentMRZ = data[i].slice(1);
@@ -17,12 +17,12 @@ class LettersStatistics {
                 throw new Error(`MRZ for ${name} should have at least 2 lines`);
             }
 
-            var size = currentMRZ[0].length;
+            /*var size = currentMRZ[0].length;
             for (var j = 1; j < currentMRZ.length; ++j) {
                 if(size !== currentMRZ[j].length) {
                     throw new Error(`MRZ for ${name} should have the same length for all the lines`);
                 }
-            }
+            }*/
             this.data[name] = currentMRZ;
         }
 
@@ -35,7 +35,8 @@ class LettersStatistics {
             };
         }
         this.letters[LINE_LENGTH] = {
-            count: 0
+            count: 0,
+            errors: new Set([])
         };
     }
 
@@ -47,20 +48,22 @@ class LettersStatistics {
         }
 
         for(var i = 0; i < mrz.length; ++i) {
-            var line = mrz[i];
+            var currentLine = mrz[i];
             var ground = data[i];
 
-            if(line.length !== ground.length); {
+            if(currentLine.length !== ground.length) {
                 this.letters[LINE_LENGTH].count++;
+                this.letters[LINE_LENGTH].errors.add(filename);
                 continue;
             }
 
-            for(var j = 0; j < line.length; ++j) {
-                var predictedLetter = line[j];
+            for(var j = 0; j < currentLine.length; ++j) {
+                var predictedLetter = currentLine[j];
+
                 var groundLetter = ground[j];
                 if (predictedLetter !== groundLetter) {
                     this.letters[groundLetter].count++;
-                    this.letters[groundLetter].errors.add(predictedLetter);
+                    this.letters[groundLetter].errors.add(`${predictedLetter} ${filename}`);
                 }
             }
         }

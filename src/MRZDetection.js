@@ -51,7 +51,7 @@ const roiOptions = {
 const fingerprintOptions = {
     height: 12,
     width: 12,
-    minSimilarity: 0.3,
+    minSimilarity: 0.5,
     fontName: 'ocrb',
     category: symbols.label
 };

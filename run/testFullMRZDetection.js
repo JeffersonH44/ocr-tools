@@ -70,7 +70,7 @@ Promise.all(promises).then(function (images) {
             continue;
         }
 
-        var margin = 0;
+        var margin = 10;
 
         var crop = image.crop({
             y: y - margin,
@@ -107,10 +107,11 @@ Promise.all(promises).then(function (images) {
                 `<img src="./${maskPath}" width="600" height="600">`,
                 `<img src="./${cropPath}" width="600" height="200">`,
             ].concat(outputTable.images),
-            'Row info median': `<span class='histogram'>${parseRowInfo.join(',')}</span>`,
-            'Filtered info median': `<span class='histogram'>${filteredHistogram.join(',')}</span>`,
-            simPeaks: simPeaks,
-            simBetweenPeaks: simBetweenPeaks,
+            'filename': files[i],
+            //'Row info median': `<span class='histogram'>${parseRowInfo.join(',')}</span>`,
+            //'Filtered info median': `<span class='histogram'>${filteredHistogram.join(',')}</span>`,
+            //simPeaks: simPeaks,
+            //simBetweenPeaks: simBetweenPeaks,
             'Error information': outputTable['Error Information'],
             'Code error': outputTable['Code Error'],
             'Histogram': outputTable.Histogram
