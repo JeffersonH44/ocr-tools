@@ -1,11 +1,13 @@
 'use strict';
 
 const bestMatch = require('./bestMatch');
+const ambiguitySolver = require('./ambiguitySolver');
 
 module.exports = function doOcrOnLines(lines, fontData, options = {}) {
     var {
         minSimilarity = 0.8,
-        maxNotFound = Number.MIN_SAFE_INTEGER
+        maxNotFound = Number.MIN_SAFE_INTEGER,
+        ambiguity = false
     } = options;
     
     // we try to analyse each line
@@ -55,6 +57,10 @@ module.exports = function doOcrOnLines(lines, fontData, options = {}) {
                 rois: rois
             });
         }
+    }
+
+    if(ambiguity) {
+        ambiguitySolver(report);
     }
 
     return {

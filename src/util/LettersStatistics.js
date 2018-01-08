@@ -63,7 +63,7 @@ class LettersStatistics {
                 var groundLetter = ground[j];
                 if (predictedLetter !== groundLetter) {
                     this.letters[groundLetter].count++;
-                    this.letters[groundLetter].errors.add(`${predictedLetter} ${filename}`);
+                    this.letters[groundLetter].errors.add(`${predictedLetter} ${i + 1}:${j + 1} ${filename}`);
                 }
             }
         }

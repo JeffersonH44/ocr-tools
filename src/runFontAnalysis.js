@@ -4,7 +4,7 @@ const doOcrOnLines = require('./util/doOcrOnLines');
 const getLinesFromImage = require('./util/getLinesFromImage');
 
 module.exports = function runFontAnalysis(image, allFontData, options={}) {
-    const lines = getLinesFromImage(image, options);
+    const lines = getLinesFromImage(image, options).lines;
     
     console.log('Number of identified lines',lines.length);
     

@@ -53,7 +53,8 @@ const fingerprintOptions = {
     width: 12,
     minSimilarity: 0.5,
     fontName: 'ocrb',
-    category: symbols.label
+    category: symbols.label,
+    ambiguity: true
 };
 
 const maxSizeRoi = 800;
@@ -387,5 +388,7 @@ module.exports = {
     getMRZ,
     isMRZCorrect,
     getLetterStats,
-    codes
+    codes,
+    fingerprintOptions,
+    roiOptions
 };

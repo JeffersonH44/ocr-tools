@@ -1,10 +1,12 @@
 'use strict';
 const rootDir = '..';
 
+var name = 'real';
+
 module.exports = {
     rootDir: rootDir,
-    readPath: rootDir + '/data/passport/',
+    readPath: rootDir + `/data/${name}/`,
     saveMask: rootDir + '/mask/',
     saveMRZ: rootDir + '/mrz/',
-    saveHTMLFile: 'passport.html'
+    saveHTMLFile: `${name}.html`
 };

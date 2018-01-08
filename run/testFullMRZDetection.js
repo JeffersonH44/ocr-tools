@@ -3,6 +3,8 @@
 var IJS = require('image-js').Image;
 var fs = require('fs');
 var tableify = require('tableify');
+var loadFingerprints=require('../src/util/loadAllFontData');
+var runFontAnalysis=require('../src/runFontAnalysis');
 
 var {
     readPath,
@@ -15,7 +17,9 @@ var {
     getMRZ,
     filterManager,
     getLetterStats,
-    codes
+    codes,
+    fingerprintOptions,
+    roiOptions
 } = require('../src/MRZDetection');
 
 // options
@@ -23,6 +27,16 @@ const maskOptions = {
     invert: true,
     algorithm: 'isodata'
 };
+
+const allFingerprints = {
+    height: fingerprintOptions.height,
+    width: fingerprintOptions.width,
+    category: fingerprintOptions.category,
+    maxSimilarity: 0.7, // we store all the different fontFingerprint
+    fontName: ''
+};
+
+var allFontFingerprints=loadFingerprints(allFingerprints);
 
 var files = fs.readdirSync(readPath);
 files = files.filter(files => files.endsWith('.png'));
@@ -76,6 +90,20 @@ Promise.all(promises).then(function (images) {
             y: y - margin,
             height: height + 2 * margin
         });
+
+        var results=runFontAnalysis(crop, allFontFingerprints, {
+            fingerprintOptions: allFingerprints,
+            roiOptions
+        }).slice(0, 5);
+
+        console.log(`for file ${files[i]}:`);
+        for (var result of results) {
+            console.log('----------',result.fontName, '--',
+                'Total similarity: ', result.totalSimilarity, '-',
+                'Total found: ', result.totalFound, '-',
+                'Total not found: ', result.totalNotFound);
+        }
+
 
         if (!fs.existsSync(saveMRZ)) {
             fs.mkdirSync(saveMRZ);
