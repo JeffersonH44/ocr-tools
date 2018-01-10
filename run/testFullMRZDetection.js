@@ -99,7 +99,7 @@ Promise.all(promises).then(function (images) {
         console.log(`for file ${files[i]}:`);
         for (var result of results) {
             console.log('----------',result.fontName, '--',
-                'Total similarity: ', result.totalSimilarity, '-',
+                'Total similarity: ', result.totalSimilarity / result.totalFound, '-',
                 'Total found: ', result.totalFound, '-',
                 'Total not found: ', result.totalNotFound);
         }

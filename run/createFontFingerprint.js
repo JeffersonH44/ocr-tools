@@ -5,7 +5,7 @@ var saveFingerprint=require('../src/util/saveFontData');
 var getInstalledRegularFonts=require('../src/util/getInstalledRegularFonts');
 
 
-var fonts=getInstalledRegularFonts().filter(elem => elem === 'OCRB-Regular');
+var fonts=getInstalledRegularFonts();//.filter(elem => elem === 'OCRB-Regular');
 
 //fonts=fonts.filter(a=>a.toLowerCase().indexOf('ocr')>=0).slice(0,3);
 //fonts=fonts.slice(0,1);
@@ -20,8 +20,8 @@ var options={
         greyThreshold: 0.5
     },
     fingerprintOptions: {
-        height: 100,
-        width: 100,
+        height: 64,
+        width: 45,
         category: symbols.label,
         maxSimilarity: 0.95, // we store all the different fontFingerprint
         fontName: ''

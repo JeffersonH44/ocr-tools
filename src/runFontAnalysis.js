@@ -3,15 +3,17 @@
 const doOcrOnLines = require('./util/doOcrOnLines');
 const getLinesFromImage = require('./util/getLinesFromImage');
 
-module.exports = function runFontAnalysis(image, allFontData, options={}) {
+module.exports = function runFontAnalysis(image, allFontData, options = {}) {
     const lines = getLinesFromImage(image, options).lines;
-    
-    console.log('Number of identified lines',lines.length);
-    
+
+    console.log('Number of identified lines', lines.length);
+
+    var fingerprintOptions = Object.assign({}, options.fingerprintOptions, {minSimilarity: 0.9});
+
     const results = [];
     for (const fontData of allFontData) {
-        
-        var result=doOcrOnLines(lines, fontData, options.fingerprintOptions);
+
+        var result = doOcrOnLines(lines, fontData, fingerprintOptions);
         result.fontName = fontData.font;
         results.push(result);
     }

@@ -39,7 +39,7 @@ IJS.load('demo/test.png').then(function(image) {
     
     for (var result of results) {
         console.log('----------',result.fontName, '--',
-            'Total similarity: ', result.totalSimilarity, '-',
+            'Total similarity: ', result.totalSimilarity / result.totalFound, '-',
             'Total found: ', result.totalFound, '-',
             'Total not found: ', result.totalNotFound);
     }
