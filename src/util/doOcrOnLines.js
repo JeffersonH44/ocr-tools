@@ -21,6 +21,7 @@ module.exports = function doOcrOnLines(lines, fontData, options = {}) {
         line.notFound = 0;
         var rois = line.rois;
         for (var roi of rois) {
+            // TODO: get roi.mask() for matrix
             var roiData = roi.data;
             var match = bestMatch(roiData, fontData);
             if (match.similarity > minSimilarity) {
